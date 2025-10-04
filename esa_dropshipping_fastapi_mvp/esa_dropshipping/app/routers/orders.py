@@ -36,3 +36,6 @@ def get_order(order_id: int, db: Session = Depends(get_db)):
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
+@router.get("/", response_model=list[schemas.OrderOut])
+def list_orders(db: Session = Depends(get_db)):
+    return db.query(models.Order).all()
