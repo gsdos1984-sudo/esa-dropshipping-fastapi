@@ -22,6 +22,9 @@ def create_order(payload: schemas.OrderCreate, db: Session = Depends(get_db)):
     )
     db.add(order)
     db.flush()
+@router.get("/", response_model=list[schemas.OrderOut])
+def list_orders(db: Session = Depends(get_db)):
+    return db.query(models.Order).all()
 
     for it in payload.items:
         db.add(models.OrderItem(order_id=order.id, product_id=it.product_id, qty=it.qty))
