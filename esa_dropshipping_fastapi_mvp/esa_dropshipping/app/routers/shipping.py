@@ -49,3 +49,6 @@ def update_shipment_status(shipment_id: int, new_status: str, db: Session = Depe
 
     db.commit()
     return {"ok": True, "shipment_id": shipment_id, "status": new_status}
+@router.get("/")
+def list_shipments(db: Session = Depends(get_db)):
+    return db.query(models.Shipment).all()
